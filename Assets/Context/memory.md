@@ -1,0 +1,5 @@
+- Bootstrapped missing context docs on 2026-04-13.
+- Current project state is minimal: empty GameManager, sample scene, no gameplay systems yet.
+- Plan is centered on a size-driven puzzle vertical slice, not full feature spread.
+- Prototype recommendation: discrete size tiers first, then validate damage/gating/platform loop.
+- Revisit mirror interaction semantics before implementation.
