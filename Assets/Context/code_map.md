@@ -7,13 +7,6 @@
 - Main dependencies: `UnityEngine`
 - Important notes: 目前为空实现，后续应避免把全部系统直接堆入该文件。
 
-## `Assets/Scenes/SampleScene.unity`
-
-- Path: `Assets/Scenes/SampleScene.unity`
-- Purpose: 当前原型主场景，预计会先作为尺寸玩法纵切的验证场景。
-- Main dependencies: 场景内对象配置、后续玩法脚本
-- Important notes: 现阶段仍应视为实验场景，适合先验证核心交互闭环。
-
 ## `Assets/Context/plan.md`
 
 - Path: `Assets/Context/plan.md`

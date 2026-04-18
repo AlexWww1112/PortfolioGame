@@ -1,5 +1,7 @@
 - Bootstrapped missing context docs on 2026-04-13.
 - Current project state is minimal: empty GameManager, sample scene, no gameplay systems yet.
-- Plan is centered on a size-driven puzzle vertical slice, not full feature spread.
-- Prototype recommendation: discrete size tiers first, then validate damage/gating/platform loop.
-- Revisit mirror interaction semantics before implementation.
+- User clarified on 2026-04-15: Codex should not design systems or levels.
+- Plan now focuses on engineering implementation only; user owns system rules, level design, tuning, and concrete gameplay parameters.
+- Before creating new scripts, obtain user permission and confirm first module specs.
+- Latest AGENTS.md adds: Unity project; user manually attaches all scripts; do not create/generate scene objects in code.
+- code_map.md should only list files under Assets/Context/ and Assets/Scripts/.

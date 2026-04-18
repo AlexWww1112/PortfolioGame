@@ -79,6 +79,7 @@ Rules:
 - write for human readability
 - explain what each important file does, not just its name
 - remove outdated entries when files are renamed, deleted, or repurposed
+- only contain files from `Context` folder and `Scripts` folder
 
 ---
 
