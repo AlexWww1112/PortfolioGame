@@ -7,6 +7,41 @@
 - Main dependencies: `UnityEngine`
 - Important notes: 目前为空实现，后续应避免把全部系统直接堆入该文件。
 
+## `Assets/Scripts/InputManager.cs`
+
+- Path: `Assets/Scripts/InputManager.cs`
+- Purpose: 封装旧版 Unity Input Manager 的键鼠输入，读取移动、鼠标视角、左键选择和滚轮输入。
+- Main dependencies: `UnityEngine.Input`, Unity legacy Input Manager axes
+- Important notes: 输入属性会在读取时直接查询当前帧输入，避免 `Update` 顺序丢失单帧点击；后续 Unity Input System 重构应优先替换此文件对外输入来源。
+
+## `Assets/Scripts/PlayerMovement.cs`
+
+- Path: `Assets/Scripts/PlayerMovement.cs`
+- Purpose: 根据 `InputManager.MoveInput` 驱动玩家通过 `CharacterController` 进行 WASD 水平移动。
+- Main dependencies: `InputManager`, `UnityEngine.CharacterController`
+- Important notes: 需要用户在 Inspector 中手动绑定 `InputManager` 和 `CharacterController`，不会自动查找或创建组件。
+
+## `Assets/Scripts/PlayerLook.cs`
+
+- Path: `Assets/Scripts/PlayerLook.cs`
+- Purpose: 根据 `InputManager.LookInput` 旋转玩家 yaw，并旋转指定 camera pitch root 实现鼠标视角。
+- Main dependencies: `InputManager`, `UnityEngine.Transform`
+- Important notes: 需要用户手动绑定 camera pitch root；脚本不会自动查找 Camera。
+
+## `Assets/Scripts/InteractableObject.cs`
+
+- Path: `Assets/Scripts/InteractableObject.cs`
+- Purpose: 标记可被选中和缩放的场景对象，保存缩放倍率范围并触发选中/缩放事件。
+- Main dependencies: `UnityEngine`, `UnityEngine.Events`
+- Important notes: 当前只改变自身 `transform.localScale`，属性联动系统后续应基于此组件的缩放状态扩展。
+
+## `Assets/Scripts/ObjectSelector.cs`
+
+- Path: `Assets/Scripts/ObjectSelector.cs`
+- Purpose: 通过指定 ray origin 发射射线，左键选择 `InteractableObject`，滚轮缩放当前选中对象，并绘制屏幕中心准星。
+- Main dependencies: `InputManager`, `InteractableObject`, `UnityEngine.Physics`
+- Important notes: 需要用户手动绑定 `InputManager` 和 ray origin，并设置可选对象 LayerMask；射线会扫描所有命中并选最近的 `InteractableObject`；准星使用 `OnGUI` 绘制，不生成 UI GameObject。
+
 ## `Assets/Context/plan.md`
 
 - Path: `Assets/Context/plan.md`

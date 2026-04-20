@@ -4,4 +4,12 @@
 - Plan now focuses on engineering implementation only; user owns system rules, level design, tuning, and concrete gameplay parameters.
 - Before creating new scripts, obtain user permission and confirm first module specs.
 - Latest AGENTS.md adds: Unity project; user manually attaches all scripts; do not create/generate scene objects in code.
+- Latest AGENTS.md also says to minimize fallback mechanisms; prefer explicit serialized references and fail-fast errors.
 - code_map.md should only list files under Assets/Context/ and Assets/Scripts/.
+- Implemented first input prototype using legacy Input Manager scripts: InputManager, PlayerMovement, PlayerLook, ObjectSelector, InteractableObject.
+- New scripts use manual Inspector references; avoid auto-finding cameras/managers/objects.
+- Deferred: gamepad support and replacing legacy InputManager implementation with Unity Input System.
+- ObjectSelector now draws a center crosshair with OnGUI; no Canvas/Image/GameObject is created by code.
+- Selection bug fix: InputManager no longer caches one-frame input in Update; properties query Unity Input directly to avoid execution-order misses.
+- Added concise comments to gameplay scripts after user pointed out AGENTS.md comment requirement.
+- ObjectSelector hover fix: raycast now scans all hits and picks nearest InteractableObject, so EveryLayer hitting non-interactable colliders first should not keep crosshair white.

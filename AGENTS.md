@@ -10,6 +10,7 @@
 - 新的代码文件写在`Assets/Scripts/` 文件夹中。
 - 更改用户写或修改的代码需要先获得许可。
 - 所有的script都会由我手动attach到object上，不要在代码里生成任何objects
+- 尽量少写兜底机制
 
 # Documentation and Context Rules
 
