@@ -10,9 +10,16 @@
 ## `Assets/Scripts/InputManager.cs`
 
 - Path: `Assets/Scripts/InputManager.cs`
-- Purpose: 封装旧版 Unity Input Manager 的键鼠输入，读取移动、鼠标视角、左键选择和滚轮输入。
-- Main dependencies: `UnityEngine.Input`, Unity legacy Input Manager axes
-- Important notes: 输入属性会在读取时直接查询当前帧输入，避免 `Update` 顺序丢失单帧点击；后续 Unity Input System 重构应优先替换此文件对外输入来源。
+- Purpose: 封装 Unity Input System 的 Player action map，向 gameplay 脚本提供移动、视角、选择和缩放输入。
+- Main dependencies: `UnityEngine.InputSystem`, `InputActionAsset`
+- Important notes: 默认读取 `Move`、`Look`、`Select`、`Scale` 动作；键鼠和基础手柄共用同一套输出接口。
+
+## `Assets/Scripts/InputSystem_Actions.inputactions`
+
+- Path: `Assets/Scripts/InputSystem_Actions.inputactions`
+- Purpose: Unity Input System 动作资源，定义 Player 输入动作与键鼠、手柄、基础 XR 绑定。
+- Main dependencies: Unity Input System package
+- Important notes: `InputManager` 默认读取其中的 `Player/Move`、`Player/Look`、`Player/Select`、`Player/Scale`。
 
 ## `Assets/Scripts/PlayerMovement.cs`
 
@@ -31,16 +38,16 @@
 ## `Assets/Scripts/InteractableObject.cs`
 
 - Path: `Assets/Scripts/InteractableObject.cs`
-- Purpose: 标记可被选中和缩放的场景对象，保存缩放倍率范围并触发选中/缩放事件。
+- Purpose: 标记可被选中、拿起和缩放的场景对象，保存缩放倍率范围、拿起状态并触发相关事件。
 - Main dependencies: `UnityEngine`, `UnityEngine.Events`
-- Important notes: 当前只改变自身 `transform.localScale`，属性联动系统后续应基于此组件的缩放状态扩展。
+- Important notes: 当前只改变自身 `transform.localScale` 和位置；如果手动绑定 Rigidbody，拿起时会临时切换为 kinematic，放下时恢复。
 
 ## `Assets/Scripts/ObjectSelector.cs`
 
 - Path: `Assets/Scripts/ObjectSelector.cs`
-- Purpose: 通过指定 ray origin 发射射线，左键选择 `InteractableObject`，滚轮缩放当前选中对象，并绘制屏幕中心准星。
+- Purpose: 通过指定 ray origin 发射射线，选择并拿起 `InteractableObject`，再次选择时放下，滚轮缩放当前拿起对象，并绘制屏幕中心准星。
 - Main dependencies: `InputManager`, `InteractableObject`, `UnityEngine.Physics`
-- Important notes: 需要用户手动绑定 `InputManager` 和 ray origin，并设置可选对象 LayerMask；射线会扫描所有命中并选最近的 `InteractableObject`；准星使用 `OnGUI` 绘制，不生成 UI GameObject。
+- Important notes: 需要用户手动绑定 `InputManager` 和 ray origin，并设置可选对象 LayerMask；射线会扫描所有命中并选最近的 `InteractableObject`；拿起位置由 `holdDistance` 控制；准星使用 `OnGUI` 绘制，不生成 UI GameObject。
 
 ## `Assets/Context/plan.md`
 

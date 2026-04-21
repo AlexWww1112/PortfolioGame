@@ -10,6 +10,9 @@
 - 修复左键选择可能失效的问题：`InputManager` 改为读取时直接查询输入，避免 `Update` 执行顺序导致单帧点击信号丢失。
 - 为输入、移动、视角、选择、缩放脚本补充了关键逻辑注释。
 - 修复准星不变色的常见原因：`ObjectSelector` 现在会扫描射线路径上的所有命中，选择最近的 `InteractableObject`，避免 `EveryLayer` 下先命中非交互 Collider 后直接失败。
+- 将 `InputManager` 从旧版 Unity Input Manager 重构为 Unity Input System action 读取。
+- 在 `InputSystem_Actions.inputactions` 的 Player map 中增加 `Select` 和 `Scale` 动作，支持键鼠、基础手柄和基础 XR 绑定。
+- 实现可交互物体拿起/放下：选中可拿起物体后会保持在射线前方，再次按选择键放下；`InteractableObject` 现在提供 `IsHeld` 状态。
 
 # In Progress
 
@@ -26,7 +29,8 @@
 - 当前 `plan.md` 已明确职责边界：用户负责系统和关卡设计，Codex 负责按规格实现功能。
 - 后续不要主动替用户补充关卡流程、数值平衡或系统设计结论。
 - `code_map.md` 只能记录 `Assets/Context/` 和 `Assets/Scripts/` 下的文件。
-- 当前输入读取使用旧版 Unity Input Manager；手柄支持和 Unity Input System 重构已列入后续计划。
+- 当前输入读取使用 Unity Input System；PC 和基础手柄输入走同一套 `InputManager` 输出接口。
 - 中心准星由 `ObjectSelector.OnGUI` 绘制，不创建 Canvas、Image 或其他场景对象。
 - `ObjectSelector` 默认使用 `QueryTriggerInteraction.Collide`，可识别 trigger collider 上或父级上的 `InteractableObject`。
+- 拿起物体的放置点由 `ObjectSelector.holdDistance` 控制；如果 `InteractableObject` 绑定了 Rigidbody，拿起时会临时设为 kinematic，放下时恢复原状态。
 - `dotnet build Assembly-CSharp.csproj --no-restore` 因缺少 `Temp/obj/Assembly-CSharp/project.assets.json` 失败；普通 `dotnet build` 卡在 restore 阶段，尚未得到编译结果。

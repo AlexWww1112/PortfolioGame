@@ -8,6 +8,9 @@ public class ObjectSelector : MonoBehaviour
     [SerializeField] private LayerMask selectableLayers = ~0;
     [SerializeField] private QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Collide;
 
+    [Header("Hold")]
+    [SerializeField] private float holdDistance = 2f;
+
     [Header("Crosshair")]
     [SerializeField] private bool showCrosshair = true;
     [SerializeField] private Color defaultCrosshairColor = Color.white;
@@ -32,17 +35,54 @@ public class ObjectSelector : MonoBehaviour
     private void Update()
     {
         // The same ray drives hover color, left-click selection, and scroll scaling target choice.
-        hoveredObject = FindInteractableFromRay();
+        hoveredObject = selectedObject != null && selectedObject.IsHeld ? null : FindInteractableFromRay();
 
         if (inputManager.SelectPressed)
         {
-            SetSelectedObject(hoveredObject);
+            ToggleHeldSelection();
+        }
+
+        if (selectedObject != null && selectedObject.IsHeld)
+        {
+            MoveHeldSelection();
         }
 
         if (selectedObject != null && !Mathf.Approximately(inputManager.ScrollDelta, 0f))
         {
             selectedObject.ApplyScaleDelta(inputManager.ScrollDelta);
         }
+    }
+
+    private void ToggleHeldSelection()
+    {
+        if (selectedObject != null && selectedObject.IsHeld)
+        {
+            PlaceSelectedObject();
+            return;
+        }
+
+        if (hoveredObject != null && hoveredObject.CanBeHeld)
+        {
+            PickUpObject(hoveredObject);
+        }
+    }
+
+    private void PickUpObject(InteractableObject interactable)
+    {
+        SetSelectedObject(interactable);
+        selectedObject.SetHeld(true);
+    }
+
+    private void PlaceSelectedObject()
+    {
+        selectedObject.SetHeld(false);
+        SetSelectedObject(null);
+    }
+
+    private void MoveHeldSelection()
+    {
+        Vector3 holdPosition = rayOrigin.position + rayOrigin.forward * holdDistance;
+        selectedObject.MoveHeld(holdPosition);
     }
 
     private void OnGUI()

@@ -8,8 +8,11 @@
 - code_map.md should only list files under Assets/Context/ and Assets/Scripts/.
 - Implemented first input prototype using legacy Input Manager scripts: InputManager, PlayerMovement, PlayerLook, ObjectSelector, InteractableObject.
 - New scripts use manual Inspector references; avoid auto-finding cameras/managers/objects.
-- Deferred: gamepad support and replacing legacy InputManager implementation with Unity Input System.
+- Basic gamepad support and Unity Input System refactor are implemented; Meta Quest-specific ray/feedback/locomotion remains deferred.
 - ObjectSelector now draws a center crosshair with OnGUI; no Canvas/Image/GameObject is created by code.
-- Selection bug fix: InputManager no longer caches one-frame input in Update; properties query Unity Input directly to avoid execution-order misses.
+- Selection input uses InputAction.WasPressedThisFrame, avoiding old Update-cache execution-order misses.
 - Added concise comments to gameplay scripts after user pointed out AGENTS.md comment requirement.
 - ObjectSelector hover fix: raycast now scans all hits and picks nearest InteractableObject, so EveryLayer hitting non-interactable colliders first should not keep crosshair white.
+- InputManager now uses Unity Input System InputActionAsset instead of legacy Input APIs.
+- InputSystem_Actions Player map now has Select and Scale actions; basic gamepad input is supported through the same Move/Look/Select/Scale interface.
+- InteractableObject now tracks IsHeld and optional Rigidbody state; ObjectSelector toggles pick up/place with Select and holds selected objects at rayOrigin.forward * holdDistance.
