@@ -306,6 +306,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   triggerInteraction: 2
+  holdDistance: 5
   showCrosshair: 1
   defaultCrosshairColor: {r: 1, g: 1, b: 1, a: 1}
   hoverCrosshairColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -325,10 +326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0427165ca8ea64a7a81c7f3da01d50f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  horizontalAxis: Horizontal
-  verticalAxis: Vertical
-  mouseXAxis: Mouse X
-  mouseYAxis: Mouse Y
+  inputActions: {fileID: 0}
+  actionMapName: Player
+  moveActionName: Move
+  lookActionName: Look
+  selectActionName: Select
+  scaleActionName: Scale
   lockCursorOnStart: 1
 --- !u!143 &2177811184915283902
 CharacterController:

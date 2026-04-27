@@ -38,15 +38,24 @@ MonoBehaviour:
   - {fileID: -1998175153201977400}
   - {fileID: -1523049399482496418}
   - {fileID: 7323832988301867798}
+  - {fileID: 7282096266738066022}
+  - {fileID: -952627467415324205}
+  - {fileID: -5727521101225519180}
   - {fileID: 7026474032194597357}
   - {fileID: 8433211363112032982}
   - {fileID: -5250988810753170622}
   - {fileID: -2308523049136739918}
   - {fileID: 5353632381559231766}
   - {fileID: -835310340659685816}
+  - {fileID: -2225354920250078571}
   - {fileID: 7544886560567089785}
   - {fileID: 4807852158524668803}
   - {fileID: 2876454648435717579}
+  - {fileID: 7941546975734308697}
+  - {fileID: -3640234486373549430}
+  - {fileID: -695921100416532704}
+  - {fileID: -4636198013442504318}
+  - {fileID: 4416928956146557479}
   - {fileID: -7792958065864879708}
   - {fileID: 3952479239057941078}
   - {fileID: -1105488291738050053}
@@ -54,6 +63,7 @@ MonoBehaviour:
   - {fileID: -4218827690042176884}
   - {fileID: -3301223368579477294}
   - {fileID: -7316440698264545043}
+  - {fileID: -5872186813013598308}
   customLoaderName: 
   m_renderMode: 1
   m_latencyOptimization: 0
@@ -126,7 +136,6 @@ MonoBehaviour:
   m_Name: HandTracking Android
   m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.OpenXR.HandTracking
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Hand Tracking Subsystem
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.handtracking
@@ -136,7 +145,6 @@ MonoBehaviour:
   targetOpenXRApiVersion: 
   required: 0
   customRuntimeLoaderName: 
-  m_ShouldBeRunning: 0
 --- !u!114 &-5727521101225519180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +158,6 @@ MonoBehaviour:
   m_Name: DetachedOculusTouchControllerProfile Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedOculusTouchControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Oculus Touch Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.oculustouch.detached
@@ -173,7 +180,6 @@ MonoBehaviour:
   m_Name: MetaXRSubsampledLayout Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRSubsampledLayout
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Subsampled Layout
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.subsampledLayout
@@ -288,7 +294,6 @@ MonoBehaviour:
   m_Name: MetaXRSpaceWarp Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRSpaceWarp
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Space Warp
   version: 1.0.0
   featureIdInternal: com.meta.openxr.feature.spacewarp
@@ -355,7 +360,6 @@ MonoBehaviour:
   m_Name: MetaXRFeature Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRFeature
   m_enabled: 1
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Feature
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.metaxr
@@ -396,13 +400,6 @@ MonoBehaviour:
   targetOpenXRApiVersion: 1.1.45
   required: 0
   customRuntimeLoaderName: 
-  _parametricHapticsEnabled: 0
-  _hapticsAmplitudeEnvelopeEnabled: 0
-  _hapticPcmEnabled: 0
-  _simultaneousHandsAndControllersEnabled: 0
-  _parametricHapticsSupported: 0
-  _simultaneousHandsAndControllersSupported: 0
-  _storageEnabled: 0
 --- !u!114 &-3301223368579477294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,7 +437,6 @@ MonoBehaviour:
   m_Name: MetaXRFeature Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRFeature
   m_enabled: 1
-  <failedInitialization>k__BackingField: 1
   nameUi: Meta XR Feature
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.metaxr
@@ -481,13 +477,6 @@ MonoBehaviour:
   targetOpenXRApiVersion: 1.1.45
   required: 0
   customRuntimeLoaderName: 
-  _parametricHapticsEnabled: 0
-  _hapticsAmplitudeEnvelopeEnabled: 1
-  _hapticPcmEnabled: 1
-  _simultaneousHandsAndControllersEnabled: 1
-  _parametricHapticsSupported: 0
-  _simultaneousHandsAndControllersSupported: 0
-  _storageEnabled: 0
 --- !u!114 &-2603622777593664847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +534,6 @@ MonoBehaviour:
   m_Name: MetaHandTrackingAim Android
   m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.OpenXR.MetaHandTrackingAim
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta Hand Tracking Aim
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.metahandtrackingaim
@@ -592,7 +580,6 @@ MonoBehaviour:
   m_Name: HandTracking Standalone
   m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.OpenXR.HandTracking
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Hand Tracking Subsystem
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.handtracking
@@ -602,7 +589,6 @@ MonoBehaviour:
   targetOpenXRApiVersion: 
   required: 0
   customRuntimeLoaderName: 
-  m_ShouldBeRunning: 0
 --- !u!114 &-1998175153201977400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +673,6 @@ MonoBehaviour:
   m_Name: DetachedMetaQuestTouchProControllerProfile Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedMetaQuestTouchProControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Meta Quest Touch Pro Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.metaquestpro.detached
@@ -732,7 +717,6 @@ MonoBehaviour:
   m_Name: MetaXRFoveationFeature Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRFoveationFeature
   m_enabled: 1
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Foveation
   version: 1.0.0
   featureIdInternal: com.meta.openxr.feature.foveation
@@ -771,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feeef8d85de8db242bdda70cc7ff5acd, type: 3}
   m_Name: OculusTouchControllerProfile Android
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.Features.Interactions.OculusTouchControllerProfile
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Oculus Touch Controller Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.oculustouch
@@ -841,7 +825,6 @@ MonoBehaviour:
   m_Name: DetachedOculusTouchControllerProfile Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedOculusTouchControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Oculus Touch Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.oculustouch.detached
@@ -886,7 +869,6 @@ MonoBehaviour:
   m_Name: DetachedMetaQuestTouchProControllerProfile Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedMetaQuestTouchProControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Meta Quest Touch Pro Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.metaquestpro.detached
@@ -1049,7 +1031,6 @@ MonoBehaviour:
   m_Name: MetaXRSubsampledLayout Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRSubsampledLayout
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Subsampled Layout
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.subsampledLayout
@@ -1072,7 +1053,6 @@ MonoBehaviour:
   m_Name: DetachedMetaQuestTouchPlusControllerProfile Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedMetaQuestTouchPlusControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Meta Quest Touch Plus Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.metaquestplus.detached
@@ -1263,6 +1243,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.OpenXRSettings
   features:
   - {fileID: -8294437981708639106}
+  - {fileID: 4585866671164030672}
+  - {fileID: 2777830112260410522}
+  - {fileID: 2216160730213005576}
   - {fileID: 8869148280648023200}
   - {fileID: 4783232431518852690}
   - {fileID: 2195574441269899383}
@@ -1271,8 +1254,13 @@ MonoBehaviour:
   - {fileID: -2603622777593664847}
   - {fileID: 6353327043564974381}
   - {fileID: 8774911165275977795}
+  - {fileID: 9058179125104349611}
   - {fileID: 5058416464345091927}
   - {fileID: 3373650583340093754}
+  - {fileID: 7492015779394503626}
+  - {fileID: -2874244432131071359}
+  - {fileID: 7458516547056128911}
+  - {fileID: -5603027124221524017}
   - {fileID: 7505513958676616690}
   - {fileID: 1175271328190134484}
   - {fileID: -5285755239235891969}
@@ -1281,6 +1269,7 @@ MonoBehaviour:
   - {fileID: -2081893971336536321}
   - {fileID: -4469023682549603074}
   - {fileID: -5335701678269371067}
+  - {fileID: -2045280334890148002}
   customLoaderName: 
   m_renderMode: 1
   m_latencyOptimization: 0
@@ -1309,7 +1298,6 @@ MonoBehaviour:
   m_Name: DetachedMetaQuestTouchPlusControllerProfile Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.DetachedMetaQuestTouchPlusControllerProfile
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Detached Meta Quest Touch Plus Controller Profile
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.input.metaquestplus.detached
@@ -1354,7 +1342,6 @@ MonoBehaviour:
   m_Name: MetaXRFoveationFeature Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXRFoveationFeature
   m_enabled: 1
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Foveation
   version: 1.0.0
   featureIdInternal: com.meta.openxr.feature.foveation
@@ -1377,7 +1364,6 @@ MonoBehaviour:
   m_Name: MetaXREyeTrackedFoveationFeature Standalone
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXREyeTrackedFoveationFeature
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Eye Tracked Foveation
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.eyetrackedfoveation
@@ -1472,7 +1458,6 @@ MonoBehaviour:
   m_Name: MetaXREyeTrackedFoveationFeature Android
   m_EditorClassIdentifier: Oculus.VR::Meta.XR.MetaXREyeTrackedFoveationFeature
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta XR Eye Tracked Foveation
   version: 0.0.1
   featureIdInternal: com.meta.openxr.feature.eyetrackedfoveation
@@ -1575,7 +1560,6 @@ MonoBehaviour:
   m_Name: MetaHandTrackingAim Standalone
   m_EditorClassIdentifier: Unity.XR.Hands::UnityEngine.XR.Hands.OpenXR.MetaHandTrackingAim
   m_enabled: 0
-  <failedInitialization>k__BackingField: 0
   nameUi: Meta Hand Tracking Aim
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.metahandtrackingaim
