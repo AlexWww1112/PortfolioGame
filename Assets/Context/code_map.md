@@ -42,6 +42,20 @@
 - Main dependencies: `Rigidbody`, `UnityEvent`
 - Important notes: 这是当前最适合作为“平台无关核心玩法层”起点的脚本。Quest 3 的 grab/ray/building blocks 和未来非 VR 的鼠标/手柄交互，都应尽量通过调用它的接口来驱动对象状态，而不是把规则复制到不同平台脚本里。
 
+## `Assets/Scripts/QuestInteractionBridge.cs`
+
+- Path: `Assets/Scripts/QuestInteractionBridge.cs`
+- Purpose: 作为 Quest 侧的全局交互桥，维护当前 hover 与 selected 对象，并把 Quest 的选择/释放/缩放动作转成对 `InteractableObject` 的状态调用。
+- Main dependencies: `InteractableObject`
+- Important notes: 该脚本不直接依赖 Meta 的具体 Building Block 组件类型；它期望由 UnityEvent 或其他适配层把 XR 事件转发进来。这让 Quest 实现与核心玩法之间保持薄桥接关系。
+
+## `Assets/Scripts/QuestInteractableEventBridge.cs`
+
+- Path: `Assets/Scripts/QuestInteractableEventBridge.cs`
+- Purpose: 挂在每个 Quest 可交互物体上，把 Meta Interaction SDK / Building Blocks 的 hover、select、unselect 事件转发给全局 `QuestInteractionBridge`。
+- Main dependencies: `QuestInteractionBridge`, `InteractableObject`, `Oculus.Interaction.PointerEvent`
+- Important notes: 该脚本提供无参和 `PointerEvent` 两套入口，便于同时对接 `InteractableUnityEventWrapper` 与 `PointableUnityEventWrapper`。
+
 ## `Assets/Scripts/InputSystem_Actions.inputactions`
 
 - Path: `Assets/Scripts/InputSystem_Actions.inputactions`

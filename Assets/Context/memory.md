@@ -1,6 +1,7 @@
 - 2026-04-29: refreshed docs again against actual Scripts folder.
-- current Scripts folder only contains GameManager, InputManager, PlayerMovement, PlayerLook, ObjectSelector, InteractableObject, and InputSystem_Actions.inputactions.
+- current Scripts folder now includes QuestInteractionBridge and QuestInteractableEventBridge in addition to the non-VR prototype scripts.
 - plan is Meta Quest 3 native-first with non-VR adapter layer reserved.
 - InteractableObject is the best current seed for platform-agnostic gameplay core.
 - ObjectSelector is current non-VR prototype interaction layer, not final Quest-native layer.
+- QuestInteractionBridge is the global Quest-side bridge; QuestInteractableEventBridge is the per-object forwarder from Meta wrappers.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.
