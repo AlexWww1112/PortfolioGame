@@ -1,32 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private CharacterController characterController;
-    [SerializeField] private float moveSpeed = 5f;
+    public CharacterController controller;
 
-    private void Awake()
+    public float speed = 12f;
+    public float gravity = -9.81f * 2;
+    public float jumpHeight = 3f;
+
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+
+    Vector3 velocity;
+
+    bool isGrounded;
+    public bool canJump = false; // 新增字段
+
+    // Update is called once per frame
+    void Update()
     {
-        if (inputManager == null || characterController == null)
+        //checking if we hit the ground to reset our falling velocity, otherwise we will fall faster the next time
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && velocity.y < 0)
         {
-            Debug.LogError($"{nameof(PlayerMovement)} needs an InputManager and CharacterController assigned.", this);
-            enabled = false;
-        }
-    }
-
-    private void Update()
-    {
-        Vector2 input = inputManager.MoveInput;
-
-        // Move relative to the player's current yaw so WASD follows the view direction.
-        Vector3 moveDirection = transform.right * input.x + transform.forward * input.y;
-
-        if (moveDirection.sqrMagnitude > 1f)
-        {
-            moveDirection.Normalize();
+            velocity.y = -2f;
         }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        //right is the red Axis, foward is the blue axis
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        controller.Move(move * speed * Time.deltaTime);
+
+        //check if the player is on the ground so he can jump
+        // if (Input.GetButtonDown("Jump") && isGrounded)
+        // {
+        //     //the equation for jumping
+        //     velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        // }
+
+        if (canJump && Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
     }
 }
