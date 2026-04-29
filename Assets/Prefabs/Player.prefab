@@ -149,11 +149,11 @@ GameObject:
   - component: {fileID: 8709870850663694998}
   - component: {fileID: 1748123128741551750}
   - component: {fileID: 5006295683217540909}
-  - component: {fileID: 3651147234584641325}
   - component: {fileID: 4474876082358105431}
-  - component: {fileID: 8017020208463454197}
   - component: {fileID: 2548871317209093060}
   - component: {fileID: 2177811184915283902}
+  - component: {fileID: 3216995412201735996}
+  - component: {fileID: 1485671259208863408}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -255,21 +255,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3651147234584641325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026579181699167285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84bc2e529a1df43979f5d5a2ea33de80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  inputManager: {fileID: 2548871317209093060}
-  characterController: {fileID: 2177811184915283902}
-  moveSpeed: 5
 --- !u!114 &4474876082358105431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,33 +272,6 @@ MonoBehaviour:
   lookSensitivity: 2
   minPitch: -80
   maxPitch: 80
---- !u!114 &8017020208463454197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026579181699167285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 540da48db8b434c37a9b06379af7c280, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ObjectSelector
-  inputManager: {fileID: 2548871317209093060}
-  rayOrigin: {fileID: 8028976094187452395}
-  selectDistance: 100
-  selectableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  triggerInteraction: 2
-  holdDistance: 5
-  showCrosshair: 1
-  defaultCrosshairColor: {r: 1, g: 1, b: 1, a: 1}
-  hoverCrosshairColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  selectedCrosshairColor: {r: 0, g: 1, b: 0, a: 1}
-  crosshairLength: 8
-  crosshairGap: 4
-  crosshairThickness: 2
 --- !u!114 &2548871317209093060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,3 +316,45 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3216995412201735996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026579181699167285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 540da48db8b434c37a9b06379af7c280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSelector
+  inputManager: {fileID: 2548871317209093060}
+  rayOrigin: {fileID: 8028976094187452395}
+  selectDistance: 5
+  selectableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  triggerInteraction: 2
+  holdDistance: 2
+  showCrosshair: 1
+  defaultCrosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  hoverCrosshairColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  selectedCrosshairColor: {r: 0, g: 1, b: 0, a: 1}
+  crosshairLength: 8
+  crosshairGap: 4
+  crosshairThickness: 2
+--- !u!114 &1485671259208863408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026579181699167285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5be255508e27f445a2c86f2e42a090b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  inputManager: {fileID: 2548871317209093060}
+  characterController: {fileID: 2177811184915283902}
+  moveSpeed: 5

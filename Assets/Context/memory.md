@@ -1,18 +1,6 @@
-- Bootstrapped missing context docs on 2026-04-13.
-- Current project state is minimal: empty GameManager, sample scene, no gameplay systems yet.
-- User clarified on 2026-04-15: Codex should not design systems or levels.
-- Plan now focuses on engineering implementation only; user owns system rules, level design, tuning, and concrete gameplay parameters.
-- Before creating new scripts, obtain user permission and confirm first module specs.
-- Latest AGENTS.md adds: Unity project; user manually attaches all scripts; do not create/generate scene objects in code.
-- Latest AGENTS.md also says to minimize fallback mechanisms; prefer explicit serialized references and fail-fast errors.
-- code_map.md should only list files under Assets/Context/ and Assets/Scripts/.
-- Implemented first input prototype using legacy Input Manager scripts: InputManager, PlayerMovement, PlayerLook, ObjectSelector, InteractableObject.
-- New scripts use manual Inspector references; avoid auto-finding cameras/managers/objects.
-- Basic gamepad support and Unity Input System refactor are implemented; Meta Quest-specific ray/feedback/locomotion remains deferred.
-- ObjectSelector now draws a center crosshair with OnGUI; no Canvas/Image/GameObject is created by code.
-- Selection input uses InputAction.WasPressedThisFrame, avoiding old Update-cache execution-order misses.
-- Added concise comments to gameplay scripts after user pointed out AGENTS.md comment requirement.
-- ObjectSelector hover fix: raycast now scans all hits and picks nearest InteractableObject, so EveryLayer hitting non-interactable colliders first should not keep crosshair white.
-- InputManager now uses Unity Input System InputActionAsset instead of legacy Input APIs.
-- InputSystem_Actions Player map now has Select and Scale actions; basic gamepad input is supported through the same Move/Look/Select/Scale interface.
-- InteractableObject now tracks IsHeld and optional Rigidbody state; ObjectSelector toggles pick up/place with Select and holds selected objects at rayOrigin.forward * holdDistance.
+- 2026-04-29: refreshed docs against actual Scripts folder.
+- plan rewritten to Meta Quest 3 native-first, with non-VR adapter layer reserved.
+- main mismatch is now stronger: plan wants platform-agnostic gameplay core + Quest-native interaction layer, but actual runtime stack is still SelectionManager + InteractableObject + InventorySystem + MouseMovement + PlayerMovement.
+- ObjectSelector.cs is absent from Assets/Scripts and should no longer be treated as current reality.
+- InputSystem_Actions.inputactions now lives in Assets/Scripts.
+- Old input API and new Input System coexist; future work should converge toward Quest-first Input System architecture before adding more gameplay.

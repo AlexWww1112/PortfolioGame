@@ -431,9 +431,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1973115920}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1973115921}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
       insertIndex: -1
@@ -19697,32 +19694,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
   m_PrefabInstance: {fileID: 69304541}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1973115920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973115916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec8eb0009d1814ab3b60212a14815904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  canBeHeld: 1
-  attachedRigidbody: {fileID: 1973115925}
-  minScaleMultiplier: 0.5
-  maxScaleMultiplier: 2
-  scaleChangePerScroll: 0.1
-  selectionChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  heldChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  scaleChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &1973115921
 BoxCollider:
   m_ObjectHideFlags: 0
