@@ -1,30 +1,26 @@
 # Done
 
 - 建立并持续维护 `Assets/Context/` 文档体系。
-- `plan.md` 已明确职责边界：用户负责系统与关卡设计，Codex 负责按规格实现功能。
-- 本次已重新扫描 `Assets/Scripts/` 并按实际代码更新文档，移除过期的 `ObjectSelector` 描述，补充当前真实使用的脚本结构。
 - `plan.md` 已重写为 Meta Quest 3 原生优先，并要求为非 VR 版本预留适配层。
+- 本次已重新核对 `Assets/Scripts/` 当前真实结构，确认项目目前只保留一条较新的输入与交互原型路线。
 
 # In Progress
 
 - 项目仍处于 very early prototype 阶段。
-- 当前代码库同时存在两套并行思路：
-- 一套是较旧的第一人称探索/收集/背包流程，核心脚本为 `PlayerMovement`、`MouseMovement`、`SelectionManager`、`InteractableObject`、`InventorySystem`、`DragDrop`、`ItemSlot`、`CollectManager`、`ShowISpyMessage`、`JumpUnlocker`。
-- 另一套是较新的 Input System 原型，核心脚本为 `InputManager`、`PlayerLook`，并配有 `InputSystem_Actions.inputactions` 资源。
-- 当前计划已明确 Quest 3 原生优先，但实际代码尚未形成“平台无关核心玩法层 + Quest 3 交互层 + 非 VR 适配层”的边界。
+- 当前脚本主线由 `InputManager`、`PlayerMovement`、`PlayerLook`、`ObjectSelector`、`InteractableObject` 组成。
+- 当前实现更接近“非 VR 原型 + 为未来 XR 收敛留口”的状态，还没有真正接入 Meta Quest 3 Building Blocks。
 
 # Blockers
 
-- 当前实际主流程仍偏向旧的非 VR 收集/背包原型，与最新 `plan.md` 的 Quest 3 原生主线存在明显偏差。
-- 文档中此前记录的 `ObjectSelector.cs` 已不在 `Assets/Scripts/` 中，实际选择逻辑已切换为 `SelectionManager` + `InteractableObject`。
-- 当前代码仍混用旧输入 API 与 Input System，后续如果继续实现新功能，容易继续扩大两套输入栈的分叉。
-- 当前尚未建立 Quest 3 原生所需的 XR 射线来源、XR 反馈和 XR 移动层。
-- 当前尚未建立未来非 VR 版本要复用的清晰适配接口。
+- `ObjectSelector` 当前仍直接承担中心射线、拿起放下、缩放和准星绘制，尚未拆出更适合 Quest 3 Building Blocks 对接的交互边界。
+- `PlayerLook` 当前仍是明显偏非 VR 的鼠标/摇杆视角实现，不适合作为 Quest 3 头显视角层直接复用。
+- 当前还没有“平台无关核心玩法层 + Quest 3 Building Blocks 对接层 + 非 VR 适配层”的实际代码分层。
+- 当前还没有 Meta Quest 3 原生所需的 XR 射线来源、XR 抓取、XR 反馈和 XR 移动层。
 
 # Notes
 
-- 当前输入资源 `InputSystem_Actions.inputactions` 位于 `Assets/Scripts/` 下，而不是旧记录中的 `Assets/` 根目录。
-- `PlayerMovement`、`MouseMovement`、`InteractableObject`、`JumpUnlocker` 仍直接使用 `Input.GetAxis` / `Input.GetKeyDown` / `Input.GetButtonDown`。
-- `InputManager` 与 `PlayerLook` 代表一条较新的 Input System 路线，但从代码静态关系看，尚未统一替换旧输入栈。
-- `Follow.cs` 仍会在运行时 `Instantiate` 特效对象，这反映的是现有旧代码现实，与当前 `AGENTS.md` 的新实现约束不一致。
-- 后续如果继续实现新玩法，应优先围绕 Quest 3 主线整理架构，而不是继续扩张旧的 PC-only 交互流程。
+- `Assets/Scripts/SelectionManager.cs` 当前不存在，旧文档中的相关描述已失效。
+- `InputSystem_Actions.inputactions` 当前位于 `Assets/Scripts/` 下。
+- `InteractableObject` 已具备较适合作为核心玩法层的状态：`IsSelected`、`IsHeld`、尺寸倍率、尺寸事件。
+- `ObjectSelector` 更适合作为当前非 VR 原型层，而不是最终的 Quest 3 原生交互层。
+- 以后继续实现新玩法时，应优先把玩法规则挂到 `InteractableObject` 或其他平台无关组件上，而不是继续把规则写进 `ObjectSelector`。

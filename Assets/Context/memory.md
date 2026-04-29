@@ -1,6 +1,6 @@
-- 2026-04-29: refreshed docs against actual Scripts folder.
-- plan rewritten to Meta Quest 3 native-first, with non-VR adapter layer reserved.
-- main mismatch is now stronger: plan wants platform-agnostic gameplay core + Quest-native interaction layer, but actual runtime stack is still SelectionManager + InteractableObject + InventorySystem + MouseMovement + PlayerMovement.
-- ObjectSelector.cs is absent from Assets/Scripts and should no longer be treated as current reality.
-- InputSystem_Actions.inputactions now lives in Assets/Scripts.
-- Old input API and new Input System coexist; future work should converge toward Quest-first Input System architecture before adding more gameplay.
+- 2026-04-29: refreshed docs again against actual Scripts folder.
+- current Scripts folder only contains GameManager, InputManager, PlayerMovement, PlayerLook, ObjectSelector, InteractableObject, and InputSystem_Actions.inputactions.
+- plan is Meta Quest 3 native-first with non-VR adapter layer reserved.
+- InteractableObject is the best current seed for platform-agnostic gameplay core.
+- ObjectSelector is current non-VR prototype interaction layer, not final Quest-native layer.
+- future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.
