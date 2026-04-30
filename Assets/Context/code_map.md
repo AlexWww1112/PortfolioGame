@@ -3,9 +3,9 @@
 ## `Assets/Scripts/GameManager.cs`
 
 - Path: `Assets/Scripts/GameManager.cs`
-- Purpose: 当前为空的占位入口脚本，尚未承载项目级流程控制。
-- Main dependencies: `UnityEngine`
-- Important notes: 目前没有实际逻辑；后续如果需要全局编排，应避免把输入、交互、玩法规则全部堆进该文件。
+- Purpose: 负责关卡级场景切换，提供可从 UnityEvent 直接调用的场景过渡入口。
+- Main dependencies: `UnityEngine.SceneManagement`
+- Important notes: 当前使用“加载目标场景（Additive）+ 设为 Active + 卸载当前场景”的方式切换关卡。可选 `DontDestroyOnLoad` 持续存在，并会销毁重复实例。
 
 ## `Assets/Scripts/InputManager.cs`
 
@@ -55,6 +55,13 @@
 - Purpose: 挂在每个 Quest 可交互物体上，直接订阅 Meta `PointableElement` 的 `WhenPointerEventRaised`，再把 hover/select/unselect/cancel 事件转发给全局 `QuestInteractionBridge`。
 - Main dependencies: `QuestInteractionBridge`, `InteractableObject`, `Oculus.Interaction.PointableElement`, `Oculus.Interaction.PointerEvent`
 - Important notes: 该脚本不再依赖 Inspector 里的 UnityEvent wrapper 接线。当前更推荐把 Building Blocks 生成的 `Grabbable` 组件拖给它的 `Pointable Element` 字段。
+
+## `Assets/Scripts/SizeGateInteractionTarget.cs`
+
+- Path: `Assets/Scripts/SizeGateInteractionTarget.cs`
+- Purpose: 挂在门、锁、机关等目标物上，通过 trigger 自动检测进入的 `InteractableObject`，并判定指定对象、尺寸范围和持有状态是否满足条件。
+- Main dependencies: `InteractableObject`, `Collider`, `UnityEvent`
+- Important notes: 该脚本返回明确的 `SizeGateInteractionResult`，并在成功时触发 `onSuccess`。适合实现“拿着合适尺寸的钥匙靠近门即可开门”这类交互。
 
 ## `Assets/Scripts/InputSystem_Actions.inputactions`
 

@@ -11,4 +11,6 @@
 - InteractableObject now also prefers Grabbable.Transform as scale target when available.
 - InteractableObject now has enableScaleDebugLogs to print scaleTarget.name and localScale when scaling applies.
 - InteractableObject now reapplies expected scale in LateUpdate if another system overrides localScale after ApplyScale.
+- SizeGateInteractionTarget added for trigger-based size gate evaluation with explicit result enum.
+- GameManager now owns scene transitions via additive load + unload current scene.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.

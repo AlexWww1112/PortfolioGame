@@ -15,6 +15,8 @@
 - 如果 `Scale Target` 未手动指定，`InteractableObject` 现在会优先使用同物体上的 Meta `Grabbable.Transform` 作为缩放目标。
 - `InteractableObject` 现在可选输出缩放目标调试日志，用于确认实际被缩放的 `scaleTarget` 名称与 `localScale`。
 - `InteractableObject` 现在会在帧末检测 `scaleTarget.localScale` 是否被其他系统覆盖；若被覆盖，则会重新应用期望缩放，并在调试开启时输出 warning。
+- 已新增 `SizeGateInteractionTarget`，支持触发区自动判定指定物体、尺寸范围、是否被持有，并返回明确结果。
+- `GameManager` 现在负责场景切换，提供 `TransitionToScene(string)`，内部执行“加载目标场景 + 卸载当前场景”。
 
 # In Progress
 
@@ -28,6 +30,8 @@
 - `PlayerLook` 当前仍是明显偏非 VR 的鼠标/摇杆视角实现，不适合作为 Quest 3 头显视角层直接复用。
 - 当前仍缺少 Quest 真机验证，尚未确认当前 Building Blocks 上实际使用的 `PointableElement` 是哪一个组件最稳定。
 - 当前还没有 Meta Quest 3 原生所需的 XR 反馈和 XR 移动层实现细节，当前 bridge 只处理交互状态转发。
+- `SizeGateInteractionTarget` 当前只提供目标端判定与结果事件；具体开门、失败提示、一次性消耗钥匙等表现仍需用户在 Inspector 中接线或后续补脚本。
+- 如果 `GameManager` 需要跨多个关卡持续存在，应避免在目标场景里重复放置多个实例；当前代码会销毁重复实例。
 
 # Notes
 
@@ -37,4 +41,6 @@
 - `ObjectSelector` 更适合作为当前非 VR 原型层，而不是最终的 Quest 3 原生交互层。
 - `QuestInteractableEventBridge` 现在不再要求 `InteractableUnityEventWrapper` 或 `PointableUnityEventWrapper`；它直接订阅 `PointableElement.WhenPointerEventRaised`。
 - `QuestInteractionBridge` 现在直接使用 `OVRInput` 读取右手控制器 `A / B` 按钮，避免依赖额外输入包装组件。
+- `SizeGateInteractionTarget` 的触发方式是 trigger 自动判定，不额外要求按钮输入；成功与失败结果都可通过事件对外暴露。
+- `SizeGateInteractionTarget.onSuccess` 现在可以直接连接到 `GameManager.TransitionToScene(string)`，实现例如 `Scene1 -> Scene2` 的关卡切换。
 - 以后继续实现新玩法时，应优先把玩法规则挂到 `InteractableObject` 或其他平台无关组件上，而不是继续把规则写进 `ObjectSelector` 或 Meta 组件回调里。
