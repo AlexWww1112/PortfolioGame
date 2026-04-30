@@ -450,6 +450,9 @@ PrefabInstance:
       addedObject: {fileID: 1973115927}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1973115931}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1973115932}
   m_SourcePrefab: {fileID: 100100000, guid: cf74e087e45632643a38d33881dd8e95, type: 3}
 --- !u!4 &69304542 stripped
@@ -20013,6 +20016,91 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestInteractableEventBridge
   interactionBridge: {fileID: 1877726002}
   interactableObject: {fileID: 1973115927}
+--- !u!114 &1973115931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973115916}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1464721f2283eb14e94a33e812b47be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.InteractableUnityEventWrapper
+  _interactableView: {fileID: 0}
+  _whenHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1877726002}
+        m_TargetAssemblyTypeName: QuestInteractionBridge, Assembly-CSharp
+        m_MethodName: NotifyHoverEntered
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1973115927}
+          m_ObjectArgumentAssemblyTypeName: InteractableObject, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _whenUnhover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1877726002}
+        m_TargetAssemblyTypeName: QuestInteractionBridge, Assembly-CSharp
+        m_MethodName: NotifyHoverExited
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1973115927}
+          m_ObjectArgumentAssemblyTypeName: InteractableObject, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _whenSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1877726002}
+        m_TargetAssemblyTypeName: QuestInteractionBridge, Assembly-CSharp
+        m_MethodName: NotifySelectEntered
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1973115927}
+          m_ObjectArgumentAssemblyTypeName: InteractableObject, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _whenUnselect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1877726002}
+        m_TargetAssemblyTypeName: QuestInteractionBridge, Assembly-CSharp
+        m_MethodName: NotifySelectExited
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1973115927}
+          m_ObjectArgumentAssemblyTypeName: InteractableObject, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _whenInteractorViewAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  _whenInteractorViewRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  _whenSelectingInteractorViewAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  _whenSelectingInteractorViewRemoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1973115932
 MonoBehaviour:
   m_ObjectHideFlags: 0
