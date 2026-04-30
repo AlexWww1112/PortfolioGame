@@ -40,21 +40,21 @@
 - Path: `Assets/Scripts/InteractableObject.cs`
 - Purpose: 维护可交互物体的核心状态，包括是否被选中、是否被拿起、当前尺寸倍率，以及相关 UnityEvent。
 - Main dependencies: `Rigidbody`, `UnityEvent`
-- Important notes: 这是当前最适合作为“平台无关核心玩法层”起点的脚本。Quest 3 的 grab/ray/building blocks 和未来非 VR 的鼠标/手柄交互，都应尽量通过调用它的接口来驱动对象状态，而不是把规则复制到不同平台脚本里。
+- Important notes: 这是当前最适合作为“平台无关核心玩法层”起点的脚本。Quest 3 的 grab/ray/building blocks 和未来非 VR 的鼠标/手柄交互，都应尽量通过调用它的接口来驱动对象状态，而不是把规则复制到不同平台脚本里。现在可通过 `Scale Target` 指定真正被缩放的 Transform；若未指定，则优先使用同物体上的 Meta `Grabbable.Transform`。若有其他系统在缩放后覆盖 `localScale`，该脚本会在 `LateUpdate` 中重新应用期望值。
 
 ## `Assets/Scripts/QuestInteractionBridge.cs`
 
 - Path: `Assets/Scripts/QuestInteractionBridge.cs`
-- Purpose: 作为 Quest 侧的全局交互桥，维护当前 hover 与 selected 对象，并把 Quest 的选择/释放/缩放动作转成对 `InteractableObject` 的状态调用。
-- Main dependencies: `InteractableObject`
-- Important notes: 该脚本不直接依赖 Meta 的具体 Building Block 组件类型；它期望由 UnityEvent 或其他适配层把 XR 事件转发进来。这让 Quest 实现与核心玩法之间保持薄桥接关系。
+- Purpose: 作为 Quest 侧的全局交互桥，维护当前 hover 与 selected 对象，并把 Quest 的抓取状态与右手控制器 `A / B` 缩放输入转成对 `InteractableObject` 的状态调用。
+- Main dependencies: `InteractableObject`, `OVRInput`
+- Important notes: 该脚本现在直接读取右手控制器按钮，不再依赖摇杆或 `DPadUnityEventWrapper`。默认 `A` 放大、`B` 缩小，并且只在当前 `selectedObject.IsHeld` 为真时响应。按钮步长直接作用于 `ScaleMultiplier`，而不是复用鼠标滚轮的缩放步长参数。
 
 ## `Assets/Scripts/QuestInteractableEventBridge.cs`
 
 - Path: `Assets/Scripts/QuestInteractableEventBridge.cs`
-- Purpose: 挂在每个 Quest 可交互物体上，把 Meta Interaction SDK / Building Blocks 的 hover、select、unselect 事件转发给全局 `QuestInteractionBridge`。
-- Main dependencies: `QuestInteractionBridge`, `InteractableObject`, `Oculus.Interaction.PointerEvent`
-- Important notes: 该脚本提供无参和 `PointerEvent` 两套入口，便于同时对接 `InteractableUnityEventWrapper` 与 `PointableUnityEventWrapper`。
+- Purpose: 挂在每个 Quest 可交互物体上，直接订阅 Meta `PointableElement` 的 `WhenPointerEventRaised`，再把 hover/select/unselect/cancel 事件转发给全局 `QuestInteractionBridge`。
+- Main dependencies: `QuestInteractionBridge`, `InteractableObject`, `Oculus.Interaction.PointableElement`, `Oculus.Interaction.PointerEvent`
+- Important notes: 该脚本不再依赖 Inspector 里的 UnityEvent wrapper 接线。当前更推荐把 Building Blocks 生成的 `Grabbable` 组件拖给它的 `Pointable Element` 字段。
 
 ## `Assets/Scripts/InputSystem_Actions.inputactions`
 

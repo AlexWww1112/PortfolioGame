@@ -10140,7 +10140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1101827152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10148,7 +10148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101827151}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d660178ed2b38ec4d9b564be11e400cc, type: 3}
   m_Name: 
@@ -10199,13 +10199,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101827151}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2412d6d784007cf409d79410b6fd915f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Oculus.Interaction.OVR::Oculus.Interaction.OVR.Input.OVRAxis2D
-  _controller: 3
-  _axis2D: 3
+  _controller: 2
+  _axis2D: 2
 --- !u!4 &1101827154
 Transform:
   m_ObjectHideFlags: 0
@@ -19022,7 +19022,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee5ecc1b4efa49449e23f7eacaaba21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestInteractionBridge
-  scaleInputStep: 1
+  enableDebugLogs: 0
+  scaleController: 2
+  enlargeButton: 2
+  shrinkButton: 1
+  scaleButtonStep: 0.2
 --- !u!4 &1877726003
 Transform:
   m_ObjectHideFlags: 0
@@ -19985,8 +19989,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52388faba1a4fa4a9135965d97e9636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  enableScaleDebugLogs: 0
   canBeHeld: 1
   attachedRigidbody: {fileID: 0}
+  scaleSourceGrabbable: {fileID: 1973115926}
+  scaleTarget: {fileID: 0}
   minScaleMultiplier: 0.1
   maxScaleMultiplier: 2
   scaleChangePerScroll: 0.1
@@ -20013,6 +20020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuestInteractableEventBridge
   interactionBridge: {fileID: 1877726002}
   interactableObject: {fileID: 1973115927}
+  pointableElement: {fileID: 1973115926}
 --- !u!114 &1973115932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20020,7 +20028,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973115916}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2f8f6e9e6f3e114b9bf9a57c2160615, type: 3}
   m_Name: 

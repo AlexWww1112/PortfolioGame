@@ -1,13 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Oculus.Interaction;
 
 public class InteractableObject : MonoBehaviour
 {
+    [Header("Debug")]
+    [SerializeField] private bool enableScaleDebugLogs = false;
+
     [Header("Hold")]
     [SerializeField] private bool canBeHeld = true;
     [SerializeField] private Rigidbody attachedRigidbody;
 
     [Header("Scale")]
+    [SerializeField] private Grabbable scaleSourceGrabbable;
+    [SerializeField] private Transform scaleTarget;
     [SerializeField] private float minScaleMultiplier = 0.5f;
     [SerializeField] private float maxScaleMultiplier = 2f;
     [SerializeField] private float scaleChangePerScroll = 0.1f;
@@ -18,6 +24,7 @@ public class InteractableObject : MonoBehaviour
     [SerializeField] private UnityEvent<float> scaleChanged = new UnityEvent<float>();
 
     private Vector3 initialScale;
+    private Vector3 expectedScale;
     private float scaleMultiplier = 1f;
     private bool wasKinematicBeforeHeld;
 
@@ -28,8 +35,24 @@ public class InteractableObject : MonoBehaviour
 
     private void Awake()
     {
+        if (scaleSourceGrabbable == null)
+        {
+            TryGetComponent(out scaleSourceGrabbable);
+        }
+
+        if (scaleTarget == null && scaleSourceGrabbable != null && scaleSourceGrabbable.Transform != null)
+        {
+            // Meta grab setups can move a target transform different from the bridge object itself.
+            scaleTarget = scaleSourceGrabbable.Transform;
+        }
+
+        if (scaleTarget == null)
+        {
+            scaleTarget = transform;
+        }
+
         // Store the authored scale so multiplier changes remain relative to the scene setup.
-        initialScale = transform.localScale;
+        initialScale = scaleTarget.localScale;
         scaleMultiplier = Mathf.Clamp(scaleMultiplier, minScaleMultiplier, maxScaleMultiplier);
         ApplyScale();
     }
@@ -96,7 +119,38 @@ public class InteractableObject : MonoBehaviour
 
     private void ApplyScale()
     {
-        transform.localScale = initialScale * scaleMultiplier;
+        expectedScale = initialScale * scaleMultiplier;
+        scaleTarget.localScale = expectedScale;
+
+        if (enableScaleDebugLogs)
+        {
+            Debug.Log(
+                $"[{nameof(InteractableObject)}] Applied scale to {scaleTarget.name}. " +
+                $"Multiplier: {scaleMultiplier}, LocalScale: {scaleTarget.localScale}",
+                this);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (scaleTarget == null)
+        {
+            return;
+        }
+
+        if (scaleTarget.localScale != expectedScale)
+        {
+            Vector3 actualScale = scaleTarget.localScale;
+            scaleTarget.localScale = expectedScale;
+
+            if (enableScaleDebugLogs)
+            {
+                Debug.LogWarning(
+                    $"[{nameof(InteractableObject)}] Scale target {scaleTarget.name} was overridden after ApplyScale. " +
+                    $"Expected: {expectedScale}, Actual: {actualScale}. Reapplied expected scale.",
+                    this);
+            }
+        }
     }
 
     private void UpdateRigidbodyHeldState()

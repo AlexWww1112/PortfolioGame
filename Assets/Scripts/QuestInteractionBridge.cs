@@ -2,14 +2,50 @@ using UnityEngine;
 
 public class QuestInteractionBridge : MonoBehaviour
 {
+    [Header("Debug")]
+    [SerializeField] private bool enableDebugLogs = false;
+
     [Header("Scale")]
-    [SerializeField] private float scaleInputStep = 1f;
+    [SerializeField] private OVRInput.Controller scaleController = OVRInput.Controller.RTouch;
+    [SerializeField] private OVRInput.Button enlargeButton = OVRInput.Button.One;
+    [SerializeField] private OVRInput.Button shrinkButton = OVRInput.Button.Two;
+    [SerializeField] private float scaleButtonStep = 0.25f;
 
     private InteractableObject hoveredObject;
     private InteractableObject selectedObject;
 
     public InteractableObject HoveredObject => hoveredObject;
     public InteractableObject SelectedObject => selectedObject;
+
+    private void Update()
+    {
+        if (selectedObject == null || !selectedObject.IsHeld)
+        {
+            return;
+        }
+
+        float scaleDelta = 0f;
+
+        if (OVRInput.GetDown(enlargeButton, scaleController))
+        {
+            scaleDelta += scaleButtonStep;
+            LogDebug($"Scale up pressed for {selectedObject.name}.");
+        }
+
+        if (OVRInput.GetDown(shrinkButton, scaleController))
+        {
+            scaleDelta -= scaleButtonStep;
+            LogDebug($"Scale down pressed for {selectedObject.name}.");
+        }
+
+        if (Mathf.Approximately(scaleDelta, 0f))
+        {
+            return;
+        }
+
+        // Quest button presses should change the scale multiplier directly instead of reusing mouse scroll tuning.
+        ApplyScaleToSelection(scaleDelta);
+    }
 
     public void NotifyHoverEntered(InteractableObject target)
     {
@@ -61,25 +97,16 @@ public class QuestInteractionBridge : MonoBehaviour
         ReleaseSelection(target);
     }
 
-    public void ScaleSelectedUp()
-    {
-        ApplyScaleToSelection(scaleInputStep);
-    }
-
-    public void ScaleSelectedDown()
-    {
-        ApplyScaleToSelection(-scaleInputStep);
-    }
-
     public void ApplyScaleToSelection(float scaleDelta)
     {
-        if (selectedObject == null)
+        if (selectedObject == null || !selectedObject.IsHeld)
         {
             return;
         }
 
-        // Keep scaling behavior inside InteractableObject so Quest and non-VR obey the same limits.
-        selectedObject.ApplyScaleDelta(scaleDelta);
+        // Use the shared clamp path while letting Quest buttons express a direct multiplier step.
+        selectedObject.SetScaleMultiplier(selectedObject.ScaleMultiplier + scaleDelta);
+        LogDebug($"Applied scale step {scaleDelta} to {selectedObject.name}. New multiplier: {selectedObject.ScaleMultiplier}.");
     }
 
     public void ClearSelection()
@@ -120,5 +147,15 @@ public class QuestInteractionBridge : MonoBehaviour
         {
             selectedObject.SetSelected(true);
         }
+    }
+
+    private void LogDebug(string message)
+    {
+        if (!enableDebugLogs)
+        {
+            return;
+        }
+
+        Debug.Log($"[{nameof(QuestInteractionBridge)}] {message}", this);
     }
 }

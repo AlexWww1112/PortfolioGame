@@ -3,5 +3,12 @@
 - plan is Meta Quest 3 native-first with non-VR adapter layer reserved.
 - InteractableObject is the best current seed for platform-agnostic gameplay core.
 - ObjectSelector is current non-VR prototype interaction layer, not final Quest-native layer.
-- QuestInteractionBridge is the global Quest-side bridge; QuestInteractableEventBridge is the per-object forwarder from Meta wrappers.
+- QuestInteractionBridge now polls OVRInput directly for right controller A/B scaling.
+- QuestInteractableEventBridge now subscribes directly to PointableElement.WhenPointerEventRaised instead of relying on UnityEvent wrappers.
+- QuestInteractionBridge keeps an enableDebugLogs toggle for scale diagnosis; other Quest event logs were removed.
+- Quest button scaling now changes ScaleMultiplier directly instead of routing through ApplyScaleDelta mouse-scroll tuning.
+- InteractableObject now supports a separate Scale Target transform for cases where the visible mesh is not on the same node as the grab shell.
+- InteractableObject now also prefers Grabbable.Transform as scale target when available.
+- InteractableObject now has enableScaleDebugLogs to print scaleTarget.name and localScale when scaling applies.
+- InteractableObject now reapplies expected scale in LateUpdate if another system overrides localScale after ApplyScale.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.

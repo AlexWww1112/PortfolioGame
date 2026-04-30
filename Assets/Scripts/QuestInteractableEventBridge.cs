@@ -5,54 +5,50 @@ public class QuestInteractableEventBridge : MonoBehaviour
 {
     [SerializeField] private QuestInteractionBridge interactionBridge;
     [SerializeField] private InteractableObject interactableObject;
+    [SerializeField] private PointableElement pointableElement;
 
     private void Awake()
     {
-        if (interactionBridge == null || interactableObject == null)
+        if (interactionBridge == null || interactableObject == null || pointableElement == null)
         {
-            Debug.LogError($"{nameof(QuestInteractableEventBridge)} needs a QuestInteractionBridge and InteractableObject assigned.", this);
+            Debug.LogError($"{nameof(QuestInteractableEventBridge)} needs a QuestInteractionBridge, InteractableObject, and PointableElement assigned.", this);
             enabled = false;
         }
     }
 
-    public void NotifyHoverEntered()
+    private void OnEnable()
     {
-        interactionBridge.NotifyHoverEntered(interactableObject);
+        pointableElement.WhenPointerEventRaised += HandlePointerEventRaised;
     }
 
-    public void NotifyHoverEntered(PointerEvent pointerEvent)
+    private void OnDisable()
     {
-        NotifyHoverEntered();
+        if (pointableElement == null)
+        {
+            return;
+        }
+
+        pointableElement.WhenPointerEventRaised -= HandlePointerEventRaised;
     }
 
-    public void NotifyHoverExited()
+    private void HandlePointerEventRaised(PointerEvent pointerEvent)
     {
-        interactionBridge.NotifyHoverExited(interactableObject);
-    }
-
-    public void NotifyHoverExited(PointerEvent pointerEvent)
-    {
-        NotifyHoverExited();
-    }
-
-    public void NotifySelectEntered()
-    {
-        // Meta wrappers can call this from hand grab, distance grab, or ray selection events.
-        interactionBridge.NotifySelectEntered(interactableObject);
-    }
-
-    public void NotifySelectEntered(PointerEvent pointerEvent)
-    {
-        NotifySelectEntered();
-    }
-
-    public void NotifySelectExited()
-    {
-        interactionBridge.NotifySelectExited(interactableObject);
-    }
-
-    public void NotifySelectExited(PointerEvent pointerEvent)
-    {
-        NotifySelectExited();
+        switch (pointerEvent.Type)
+        {
+            case PointerEventType.Hover:
+                interactionBridge.NotifyHoverEntered(interactableObject);
+                break;
+            case PointerEventType.Unhover:
+                interactionBridge.NotifyHoverExited(interactableObject);
+                break;
+            case PointerEventType.Select:
+                interactionBridge.NotifySelectEntered(interactableObject);
+                break;
+            case PointerEventType.Unselect:
+            case PointerEventType.Cancel:
+                interactionBridge.NotifySelectExited(interactableObject);
+                interactionBridge.NotifyHoverExited(interactableObject);
+                break;
+        }
     }
 }
