@@ -20,10 +20,7 @@
 - `Scene1` 现阶段按当前目标暂时视为完成，后续若有新的关卡需求再回补。
 - 已新增 `ScaleLinkedFloatValue`，支持把 `ScaleMultiplier` 通过可配置范围和 `AnimationCurve` 映射为连续 float 数值，并通过事件对外输出。
 - 已新增 `ScaleThresholdEvent`，支持监听尺寸倍率或映射后的 float 数值，在跨过阈值时触发进入/退出事件。
-- 已恢复 `SceneSpawnPoint`，用于标记每个目标场景的 VR 出生点。
-- `GameManager` 现在支持持久化一个手动绑定的 `OVRCameraRig`，切场景后会清理目标场景里的临时 rig，并把持久化 rig 对齐到 `SceneSpawnPoint`。
-- `GameManager` 现在把 `SceneSpawnPoint` 解释为“玩家根/地面位置”，只补偿当前头部的水平偏移，不再把头部高度直接减到 rig 根上。
-- `SizeGateInteractionTarget` 现在可选填写 `Success Scene Name`，成功时会直接调用 `GameManager.Instance.TransitionToScene(...)`，不再依赖场景里可拖的 `GameManager` 对象。
+- `GameManager` 现在改回使用 `LoadSceneMode.Single` 切换关卡，避免 Meta Building Blocks 的两个场景 rig 在 additive 过渡阶段短暂并存。
 
 # In Progress
 
@@ -31,7 +28,7 @@
 - 当前脚本主线由 `InputManager`、`PlayerMovement`、`PlayerLook`、`ObjectSelector`、`InteractableObject`、`QuestInteractionBridge`、`QuestInteractableEventBridge` 组成。
 - 当前实现已经有 Quest bridge 骨架，但还没有完成真实场景里的 Meta Quest 3 Building Blocks 接线与真机验证。
 - 当前已开始建立“尺寸变化驱动其他属性变化”的通用联动层，下一步是把具体玩法对象接到这层上验证。
-- VR 场景切换当前主线是验证“持久化单 rig + `SceneSpawnPoint`”是否解决 `Scene1 -> Scene2` 的掉落/卡住与出生点偏低问题。
+- VR 场景切换当前优先验证 `LoadSceneMode.Single` 是否解决 `Scene1 -> Scene2` 的掉落/卡住问题。
 
 # Blockers
 
@@ -42,8 +39,7 @@
 - `SizeGateInteractionTarget` 当前只提供目标端判定与结果事件；具体开门、失败提示、一次性消耗钥匙等表现仍需用户在 Inspector 中接线或后续补脚本。
 - 如果 `GameManager` 需要跨多个关卡持续存在，应避免在目标场景里重复放置多个实例；当前代码会销毁重复实例。
 - `ScaleLinkedFloatValue` 和 `ScaleThresholdEvent` 目前只提供通用数值/阈值能力；重量、伤害、音量、说话、时间倍率等具体行为仍需用户把事件接到各自对象逻辑上。
-- 当前架构要求 `GameManager` Inspector 里手动绑定持久化的 `OVRCameraRig`；若未绑定，场景切换会明确报错并停止。
-- 若目标场景中仍保留 Meta Building Blocks 自带 rig，`GameManager` 会在加载后清理这些临时 rig；后续最好逐步把后续场景改成不再自带独立 rig。
+- 如果后续仍需要精确控制 VR 出生点，应优先考虑“全局持久化单 rig + 场景出生点”这一条更完整的架构，而不是继续在“每个场景各自带 rig + additive 叠场景”上打补丁。
 
 # Notes
 
@@ -59,5 +55,4 @@
 - 接下来如果实现属性联动，优先做平台无关、Inspector 可配置的通用数值联动层，而不是直接写死“重量”“伤害”等单一玩法逻辑。
 - `ScaleLinkedFloatValue` 适合做连续型联动，例如重量、伤害、音量、时间倍率、容量等。
 - `ScaleThresholdEvent` 适合做阈值型联动，例如“大于某值开始说话，小于某值停止”“进入某区间后启用机关”等。
-- `SceneSpawnPoint` 现在表达的是玩家根/地面参考位置，不是头部高度点；把它放在地面上更符合当前对齐逻辑。
-- `SizeGateInteractionTarget.successSceneName` 适合用来做 `Scene1 -> Scene2 -> Scene3` 这种连续场景跳转，而不需要在后续场景里再手拖运行时 `GameManager` 引用。
+- 对 Meta Building Blocks 而言，若每个场景都自带 rig，`LoadSceneMode.Single` 比 “Additive 加载再手动卸载旧场景” 更稳。
