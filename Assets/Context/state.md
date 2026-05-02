@@ -21,7 +21,7 @@
 - 已新增 `ScaleLinkedFloatValue`，支持把 `ScaleMultiplier` 通过可配置范围和 `AnimationCurve` 映射为连续 float 数值，并通过事件对外输出。
 - 已新增 `ScaleThresholdEvent`，支持监听尺寸倍率或映射后的 float 数值，在跨过阈值时触发进入/退出事件。
 - 已新增 `SceneSpawnPoint`，用于给每个场景提供 VR 出生点标记。
-- `GameManager` 现在会在 additive 加载目标场景后查找 `SceneSpawnPoint`，并按 `OVRCameraRig.centerEyeAnchor` 当前偏移重新对齐 rig，避免从前一关带着追踪偏移落到错误位置。
+- `GameManager` 现在会在 additive 加载目标场景后查找该场景自己的 `OVRCameraRig` 和 `SceneSpawnPoint`，再按 `centerEyeAnchor` 当前偏移重新对齐 rig，避免从前一关带着追踪偏移落到错误位置。
 
 # In Progress
 
@@ -41,6 +41,7 @@
 - 如果 `GameManager` 需要跨多个关卡持续存在，应避免在目标场景里重复放置多个实例；当前代码会销毁重复实例。
 - `ScaleLinkedFloatValue` 和 `ScaleThresholdEvent` 目前只提供通用数值/阈值能力；重量、伤害、音量、说话、时间倍率等具体行为仍需用户把事件接到各自对象逻辑上。
 - `GameManager` 的出生点对齐依赖手动绑定的 `OVRCameraRig` 引用，以及每个目标场景里存在且仅存在一个 `SceneSpawnPoint`。
+- `GameManager` 的出生点对齐现在不再依赖手动绑定 rig，而是要求每个目标场景里存在且仅存在一个 `OVRCameraRig` 和一个 `SceneSpawnPoint`。
 
 # Notes
 

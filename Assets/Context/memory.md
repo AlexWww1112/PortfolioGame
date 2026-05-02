@@ -18,5 +18,5 @@
 - ScaleLinkedFloatValue added as the continuous scale->float mapping layer.
 - ScaleThresholdEvent added for threshold enter/exit events from either ScaleMultiplier or ScaleLinkedFloatValue output.
 - SceneSpawnPoint added as a per-scene VR spawn marker.
-- GameManager now aligns OVRCameraRig to SceneSpawnPoint after additive scene load, compensating for current centerEyeAnchor offset.
+- GameManager now aligns the target scene's OVRCameraRig to SceneSpawnPoint after additive scene load, compensating for current centerEyeAnchor offset.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.

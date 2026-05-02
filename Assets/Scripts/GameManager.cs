@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool persistAcrossSceneTransitions = true;
-    [SerializeField] private OVRCameraRig ovrCameraRig;
 
     private static GameManager instance;
     private bool transitionInProgress;
@@ -92,6 +91,7 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(targetScene);
+        yield return null;
         AlignRigToSceneSpawn(targetScene);
 
         if (currentScene.IsValid() && currentScene.isLoaded)
@@ -112,13 +112,14 @@ public class GameManager : MonoBehaviour
 
     private void AlignRigToSceneSpawn(Scene targetScene)
     {
-        if (ovrCameraRig == null)
+        OVRCameraRig targetRig = FindSceneCameraRig(targetScene);
+
+        if (targetRig == null)
         {
-            Debug.LogError($"{nameof(GameManager)} needs an {nameof(OVRCameraRig)} reference to align scene spawns.", this);
             return;
         }
 
-        if (ovrCameraRig.centerEyeAnchor == null)
+        if (targetRig.centerEyeAnchor == null)
         {
             Debug.LogError($"{nameof(GameManager)} needs {nameof(OVRCameraRig)}.{nameof(OVRCameraRig.centerEyeAnchor)} to align scene spawns.", this);
             return;
@@ -132,8 +133,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Transform rigTransform = ovrCameraRig.transform;
-        Transform eyeAnchor = ovrCameraRig.centerEyeAnchor;
+        Transform rigTransform = targetRig.transform;
+        Transform eyeAnchor = targetRig.centerEyeAnchor;
 
         if (spawnPoint.ApplyYaw)
         {
@@ -148,6 +149,38 @@ public class GameManager : MonoBehaviour
 
         Vector3 eyeWorldOffset = eyeAnchor.position - rigTransform.position;
         rigTransform.position = spawnPoint.SpawnPosition - eyeWorldOffset;
+    }
+
+    private OVRCameraRig FindSceneCameraRig(Scene targetScene)
+    {
+        GameObject[] rootObjects = targetScene.GetRootGameObjects();
+        OVRCameraRig foundRig = null;
+
+        foreach (GameObject rootObject in rootObjects)
+        {
+            OVRCameraRig[] sceneRigs = rootObject.GetComponentsInChildren<OVRCameraRig>(true);
+
+            foreach (OVRCameraRig sceneRig in sceneRigs)
+            {
+                if (foundRig == null)
+                {
+                    foundRig = sceneRig;
+                    continue;
+                }
+
+                Debug.LogError(
+                    $"Scene '{targetScene.name}' has multiple {nameof(OVRCameraRig)} components. Keep exactly one active rig per scene.",
+                    this);
+                return null;
+            }
+        }
+
+        if (foundRig == null)
+        {
+            Debug.LogError($"Scene '{targetScene.name}' has no {nameof(OVRCameraRig)}. A target scene rig is required for VR scene alignment.", this);
+        }
+
+        return foundRig;
     }
 
     private SceneSpawnPoint FindSceneSpawnPoint(Scene targetScene)
