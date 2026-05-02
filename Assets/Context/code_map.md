@@ -4,8 +4,15 @@
 
 - Path: `Assets/Scripts/GameManager.cs`
 - Purpose: 负责关卡级场景切换，提供可从 UnityEvent 直接调用的场景过渡入口。
-- Main dependencies: `UnityEngine.SceneManagement`
-- Important notes: 当前使用 `LoadSceneMode.Single` 切换关卡，让旧场景在新场景 rig 生效前先退出，避免 Meta Building Blocks 的多个场景 rig 在 additive 过渡期短暂并存。可选 `DontDestroyOnLoad` 持续存在，并会销毁重复实例。
+- Main dependencies: `UnityEngine.SceneManagement`, `OVRCameraRig`, `SceneSpawnPoint`
+- Important notes: 当前使用 `LoadSceneMode.Single` 切换关卡，并可持久化一个手动绑定的 `OVRCameraRig`。切到目标场景后，会清理场景内的临时 rig，并把持久化 rig 对齐到 `SceneSpawnPoint`。`SceneSpawnPoint` 当前位置按玩家根/地面参考解释，而不是头部高度。
+
+## `Assets/Scripts/SceneSpawnPoint.cs`
+
+- Path: `Assets/Scripts/SceneSpawnPoint.cs`
+- Purpose: 标记某个场景里的 VR 出生点，供 `GameManager` 在切场景后对齐持久化 rig。
+- Main dependencies: `GameManager`
+- Important notes: 该组件应挂在场景中的 empty object 上。当前位置应按玩家根/地面位置来摆放；`applyYaw` 控制切场景时是否同时对齐朝向。每个目标场景应只保留一个有效的 `SceneSpawnPoint`。
 
 ## `Assets/Scripts/InputManager.cs`
 
@@ -60,8 +67,8 @@
 
 - Path: `Assets/Scripts/SizeGateInteractionTarget.cs`
 - Purpose: 挂在门、锁、机关等目标物上，通过 trigger 自动检测进入的 `InteractableObject`，并判定指定对象、尺寸范围和持有状态是否满足条件。
-- Main dependencies: `InteractableObject`, `Collider`, `UnityEvent`
-- Important notes: 该脚本返回明确的 `SizeGateInteractionResult`，并在成功时触发 `onSuccess`。适合实现“拿着合适尺寸的钥匙靠近门即可开门”这类交互。
+- Main dependencies: `InteractableObject`, `Collider`, `UnityEvent`, `GameManager`
+- Important notes: 该脚本返回明确的 `SizeGateInteractionResult`，并在成功时触发 `onSuccess`。若填写 `successSceneName`，还会直接调用 `GameManager.Instance` 切到目标场景，适合做连续关卡跳转。
 
 ## `Assets/Scripts/ScaleLinkedFloatValue.cs`
 

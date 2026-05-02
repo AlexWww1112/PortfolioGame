@@ -26,6 +26,9 @@ public class SizeGateInteractionTarget : MonoBehaviour
     [SerializeField] private float maxAllowedScale = 1f;
     [SerializeField] private bool disableAfterSuccess = true;
 
+    [Header("Scene Transition")]
+    [SerializeField] private string successSceneName = string.Empty;
+
     [Header("Events")]
     [SerializeField] private UnityEvent onSuccess = new UnityEvent();
     [SerializeField] private SizeGateInteractionResultEvent interactionEvaluated = new SizeGateInteractionResultEvent();
@@ -148,10 +151,27 @@ public class SizeGateInteractionTarget : MonoBehaviour
         }
 
         onSuccess.Invoke();
+        TriggerSceneTransitionIfConfigured();
 
         if (disableAfterSuccess)
         {
             interactionCompleted = true;
         }
+    }
+
+    private void TriggerSceneTransitionIfConfigured()
+    {
+        if (string.IsNullOrWhiteSpace(successSceneName))
+        {
+            return;
+        }
+
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError($"{nameof(SizeGateInteractionTarget)} cannot transition to '{successSceneName}' because no {nameof(GameManager)} instance exists.", this);
+            return;
+        }
+
+        GameManager.Instance.TransitionToScene(successSceneName);
     }
 }
