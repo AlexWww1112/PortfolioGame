@@ -4,8 +4,15 @@
 
 - Path: `Assets/Scripts/GameManager.cs`
 - Purpose: 负责关卡级场景切换，提供可从 UnityEvent 直接调用的场景过渡入口。
-- Main dependencies: `UnityEngine.SceneManagement`
-- Important notes: 当前使用“加载目标场景（Additive）+ 设为 Active + 卸载当前场景”的方式切换关卡。可选 `DontDestroyOnLoad` 持续存在，并会销毁重复实例。
+- Main dependencies: `UnityEngine.SceneManagement`, `OVRCameraRig`, `SceneSpawnPoint`
+- Important notes: 当前使用“加载目标场景（Additive）+ 设为 Active + 对齐 VR 出生点 + 卸载当前场景”的方式切换关卡。可选 `DontDestroyOnLoad` 持续存在，并会销毁重复实例。需要在 Inspector 手动绑定 `OVRCameraRig`。
+
+## `Assets/Scripts/SceneSpawnPoint.cs`
+
+- Path: `Assets/Scripts/SceneSpawnPoint.cs`
+- Purpose: 标记某个场景里的 VR 出生点，让 `GameManager` 在场景切换后把玩家 rig 对齐到这里。
+- Main dependencies: `GameManager`
+- Important notes: 该组件应挂在场景中的 empty object 上。它表达的是玩家头部应出现的位置；`applyYaw` 控制切场景时是否同时对齐朝向。每个目标场景应只放一个有效的 `SceneSpawnPoint`。
 
 ## `Assets/Scripts/InputManager.cs`
 

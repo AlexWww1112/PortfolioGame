@@ -20,6 +20,8 @@
 - `Scene1` 现阶段按当前目标暂时视为完成，后续若有新的关卡需求再回补。
 - 已新增 `ScaleLinkedFloatValue`，支持把 `ScaleMultiplier` 通过可配置范围和 `AnimationCurve` 映射为连续 float 数值，并通过事件对外输出。
 - 已新增 `ScaleThresholdEvent`，支持监听尺寸倍率或映射后的 float 数值，在跨过阈值时触发进入/退出事件。
+- 已新增 `SceneSpawnPoint`，用于给每个场景提供 VR 出生点标记。
+- `GameManager` 现在会在 additive 加载目标场景后查找 `SceneSpawnPoint`，并按 `OVRCameraRig.centerEyeAnchor` 当前偏移重新对齐 rig，避免从前一关带着追踪偏移落到错误位置。
 
 # In Progress
 
@@ -27,6 +29,7 @@
 - 当前脚本主线由 `InputManager`、`PlayerMovement`、`PlayerLook`、`ObjectSelector`、`InteractableObject`、`QuestInteractionBridge`、`QuestInteractableEventBridge` 组成。
 - 当前实现已经有 Quest bridge 骨架，但还没有完成真实场景里的 Meta Quest 3 Building Blocks 接线与真机验证。
 - 当前已开始建立“尺寸变化驱动其他属性变化”的通用联动层，下一步是把具体玩法对象接到这层上验证。
+- VR 场景切换现在已有出生点对齐逻辑，下一步需要在 Unity 场景里实际摆放 `SceneSpawnPoint` 并验证 `Scene1 -> Scene2` 是否不再卡地下。
 
 # Blockers
 
@@ -37,6 +40,7 @@
 - `SizeGateInteractionTarget` 当前只提供目标端判定与结果事件；具体开门、失败提示、一次性消耗钥匙等表现仍需用户在 Inspector 中接线或后续补脚本。
 - 如果 `GameManager` 需要跨多个关卡持续存在，应避免在目标场景里重复放置多个实例；当前代码会销毁重复实例。
 - `ScaleLinkedFloatValue` 和 `ScaleThresholdEvent` 目前只提供通用数值/阈值能力；重量、伤害、音量、说话、时间倍率等具体行为仍需用户把事件接到各自对象逻辑上。
+- `GameManager` 的出生点对齐依赖手动绑定的 `OVRCameraRig` 引用，以及每个目标场景里存在且仅存在一个 `SceneSpawnPoint`。
 
 # Notes
 
@@ -52,3 +56,4 @@
 - 接下来如果实现属性联动，优先做平台无关、Inspector 可配置的通用数值联动层，而不是直接写死“重量”“伤害”等单一玩法逻辑。
 - `ScaleLinkedFloatValue` 适合做连续型联动，例如重量、伤害、音量、时间倍率、容量等。
 - `ScaleThresholdEvent` 适合做阈值型联动，例如“大于某值开始说话，小于某值停止”“进入某区间后启用机关”等。
+- `SceneSpawnPoint` 表达的是“玩家头部实际出现的位置与朝向”，不是 `CenterEyeAnchor` 或 `TrackingSpace` 自己的局部摆放点。
