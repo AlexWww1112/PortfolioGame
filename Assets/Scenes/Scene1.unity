@@ -6235,7 +6235,6 @@ MonoBehaviour:
   minAllowedScale: 0.1
   maxAllowedScale: 0.6
   disableAfterSuccess: 1
-  successSceneName: Scene2
   onSuccess:
     m_PersistentCalls:
       m_Calls:
@@ -11334,8 +11333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afc27f52e7a5449f9335d5cc8eecd9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  persistAcrossSceneTransitions: 1
-  persistentCameraRig: {fileID: 444685381}
+  persistAcrossSceneTransitions: 0
 --- !u!4 &1266282620
 Transform:
   m_ObjectHideFlags: 0
