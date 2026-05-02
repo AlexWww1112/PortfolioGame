@@ -17,12 +17,16 @@
 - `InteractableObject` 现在会在帧末检测 `scaleTarget.localScale` 是否被其他系统覆盖；若被覆盖，则会重新应用期望缩放，并在调试开启时输出 warning。
 - 已新增 `SizeGateInteractionTarget`，支持触发区自动判定指定物体、尺寸范围、是否被持有，并返回明确结果。
 - `GameManager` 现在负责场景切换，提供 `TransitionToScene(string)`，内部执行“加载目标场景 + 卸载当前场景”。
+- `Scene1` 现阶段按当前目标暂时视为完成，后续若有新的关卡需求再回补。
+- 已新增 `ScaleLinkedFloatValue`，支持把 `ScaleMultiplier` 通过可配置范围和 `AnimationCurve` 映射为连续 float 数值，并通过事件对外输出。
+- 已新增 `ScaleThresholdEvent`，支持监听尺寸倍率或映射后的 float 数值，在跨过阈值时触发进入/退出事件。
 
 # In Progress
 
 - 项目仍处于 very early prototype 阶段。
 - 当前脚本主线由 `InputManager`、`PlayerMovement`、`PlayerLook`、`ObjectSelector`、`InteractableObject`、`QuestInteractionBridge`、`QuestInteractableEventBridge` 组成。
 - 当前实现已经有 Quest bridge 骨架，但还没有完成真实场景里的 Meta Quest 3 Building Blocks 接线与真机验证。
+- 当前已开始建立“尺寸变化驱动其他属性变化”的通用联动层，下一步是把具体玩法对象接到这层上验证。
 
 # Blockers
 
@@ -32,6 +36,7 @@
 - 当前还没有 Meta Quest 3 原生所需的 XR 反馈和 XR 移动层实现细节，当前 bridge 只处理交互状态转发。
 - `SizeGateInteractionTarget` 当前只提供目标端判定与结果事件；具体开门、失败提示、一次性消耗钥匙等表现仍需用户在 Inspector 中接线或后续补脚本。
 - 如果 `GameManager` 需要跨多个关卡持续存在，应避免在目标场景里重复放置多个实例；当前代码会销毁重复实例。
+- `ScaleLinkedFloatValue` 和 `ScaleThresholdEvent` 目前只提供通用数值/阈值能力；重量、伤害、音量、说话、时间倍率等具体行为仍需用户把事件接到各自对象逻辑上。
 
 # Notes
 
@@ -44,3 +49,6 @@
 - `SizeGateInteractionTarget` 的触发方式是 trigger 自动判定，不额外要求按钮输入；成功与失败结果都可通过事件对外暴露。
 - `SizeGateInteractionTarget.onSuccess` 现在可以直接连接到 `GameManager.TransitionToScene(string)`，实现例如 `Scene1 -> Scene2` 的关卡切换。
 - 以后继续实现新玩法时，应优先把玩法规则挂到 `InteractableObject` 或其他平台无关组件上，而不是继续把规则写进 `ObjectSelector` 或 Meta 组件回调里。
+- 接下来如果实现属性联动，优先做平台无关、Inspector 可配置的通用数值联动层，而不是直接写死“重量”“伤害”等单一玩法逻辑。
+- `ScaleLinkedFloatValue` 适合做连续型联动，例如重量、伤害、音量、时间倍率、容量等。
+- `ScaleThresholdEvent` 适合做阈值型联动，例如“大于某值开始说话，小于某值停止”“进入某区间后启用机关”等。

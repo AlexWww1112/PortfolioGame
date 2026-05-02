@@ -13,4 +13,8 @@
 - InteractableObject now reapplies expected scale in LateUpdate if another system overrides localScale after ApplyScale.
 - SizeGateInteractionTarget added for trigger-based size gate evaluation with explicit result enum.
 - GameManager now owns scene transitions via additive load + unload current scene.
+- Scene1 can be treated as temporarily complete for now.
+- next implementation focus: platform-agnostic scale-to-attribute linkage.
+- ScaleLinkedFloatValue added as the continuous scale->float mapping layer.
+- ScaleThresholdEvent added for threshold enter/exit events from either ScaleMultiplier or ScaleLinkedFloatValue output.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.

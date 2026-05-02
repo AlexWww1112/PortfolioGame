@@ -63,6 +63,20 @@
 - Main dependencies: `InteractableObject`, `Collider`, `UnityEvent`
 - Important notes: 该脚本返回明确的 `SizeGateInteractionResult`，并在成功时触发 `onSuccess`。适合实现“拿着合适尺寸的钥匙靠近门即可开门”这类交互。
 
+## `Assets/Scripts/ScaleLinkedFloatValue.cs`
+
+- Path: `Assets/Scripts/ScaleLinkedFloatValue.cs`
+- Purpose: 把某个 `InteractableObject` 的 `ScaleMultiplier` 映射成连续 float 数值，供重量、伤害、音量、时间倍率、容量等系统读取或响应。
+- Main dependencies: `InteractableObject`, `AnimationCurve`, `UnityEvent`
+- Important notes: 使用输入范围、输出范围和 `AnimationCurve` 控制映射关系；这是平台无关的连续型属性联动层，不依赖 Quest 或非 VR 交互实现。
+
+## `Assets/Scripts/ScaleThresholdEvent.cs`
+
+- Path: `Assets/Scripts/ScaleThresholdEvent.cs`
+- Purpose: 监听尺寸倍率或 `ScaleLinkedFloatValue` 输出，在跨过阈值时触发进入/退出事件。
+- Main dependencies: `InteractableObject`, `ScaleLinkedFloatValue`, `UnityEvent`
+- Important notes: 适合实现“尺寸达到阈值后开始说话，回落后停止”“超过某值才启用机关”等状态切换。通过 `enterThreshold` / `exitThreshold` 支持简单 hysteresis，避免边界抖动反复触发。
+
 ## `Assets/Scripts/InputSystem_Actions.inputactions`
 
 - Path: `Assets/Scripts/InputSystem_Actions.inputactions`
