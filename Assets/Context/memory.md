@@ -12,11 +12,10 @@
 - InteractableObject now has enableScaleDebugLogs to print scaleTarget.name and localScale when scaling applies.
 - InteractableObject now reapplies expected scale in LateUpdate if another system overrides localScale after ApplyScale.
 - SizeGateInteractionTarget added for trigger-based size gate evaluation with explicit result enum.
-- GameManager now owns scene transitions via additive load + unload current scene.
+- GameManager now owns scene transitions and currently uses LoadSceneMode.Single for Meta Building Blocks scene changes.
 - Scene1 can be treated as temporarily complete for now.
 - next implementation focus: platform-agnostic scale-to-attribute linkage.
 - ScaleLinkedFloatValue added as the continuous scale->float mapping layer.
 - ScaleThresholdEvent added for threshold enter/exit events from either ScaleMultiplier or ScaleLinkedFloatValue output.
-- SceneSpawnPoint added as a per-scene VR spawn marker.
-- GameManager now aligns the target scene's OVRCameraRig to SceneSpawnPoint after additive scene load, compensating for current centerEyeAnchor offset.
+- additive scene transition with one rig per scene caused unresolved Meta Building Blocks issues; current strategy avoids overlapping rigs.
 - future work should converge toward: gameplay core + Quest building-block bridge + non-VR adapter.

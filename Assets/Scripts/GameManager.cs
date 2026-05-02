@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
         if (persistAcrossSceneTransitions)
         {
-            // Keep one manager alive while additive load + unload transitions complete.
+            // Keep one manager alive while scene transitions complete.
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -67,7 +67,9 @@ public class GameManager : MonoBehaviour
             yield break;
         }
 
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Additive);
+        // Meta Building Blocks camera rigs are safer when the previous scene rig is removed
+        // before the next scene rig becomes active.
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(targetSceneName, LoadSceneMode.Single);
 
         if (loadOperation == null)
         {
@@ -91,122 +93,6 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(targetScene);
-        yield return null;
-        AlignRigToSceneSpawn(targetScene);
-
-        if (currentScene.IsValid() && currentScene.isLoaded)
-        {
-            AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(currentScene);
-
-            if (unloadOperation != null)
-            {
-                while (!unloadOperation.isDone)
-                {
-                    yield return null;
-                }
-            }
-        }
-
         transitionInProgress = false;
-    }
-
-    private void AlignRigToSceneSpawn(Scene targetScene)
-    {
-        OVRCameraRig targetRig = FindSceneCameraRig(targetScene);
-
-        if (targetRig == null)
-        {
-            return;
-        }
-
-        if (targetRig.centerEyeAnchor == null)
-        {
-            Debug.LogError($"{nameof(GameManager)} needs {nameof(OVRCameraRig)}.{nameof(OVRCameraRig.centerEyeAnchor)} to align scene spawns.", this);
-            return;
-        }
-
-        SceneSpawnPoint spawnPoint = FindSceneSpawnPoint(targetScene);
-
-        if (spawnPoint == null)
-        {
-            Debug.LogWarning($"Scene '{targetScene.name}' has no {nameof(SceneSpawnPoint)}. Keeping the current rig position.", this);
-            return;
-        }
-
-        Transform rigTransform = targetRig.transform;
-        Transform eyeAnchor = targetRig.centerEyeAnchor;
-
-        if (spawnPoint.ApplyYaw)
-        {
-            float rigYaw = rigTransform.eulerAngles.y;
-            float eyeYaw = eyeAnchor.eulerAngles.y;
-            float eyeYawOffset = Mathf.DeltaAngle(rigYaw, eyeYaw);
-            float targetRigYaw = spawnPoint.SpawnRotation.eulerAngles.y - eyeYawOffset;
-
-            // Align the rig yaw so the player's actual head forward matches the authored spawn forward.
-            rigTransform.rotation = Quaternion.Euler(0f, targetRigYaw, 0f);
-        }
-
-        Vector3 eyeWorldOffset = eyeAnchor.position - rigTransform.position;
-        rigTransform.position = spawnPoint.SpawnPosition - eyeWorldOffset;
-    }
-
-    private OVRCameraRig FindSceneCameraRig(Scene targetScene)
-    {
-        GameObject[] rootObjects = targetScene.GetRootGameObjects();
-        OVRCameraRig foundRig = null;
-
-        foreach (GameObject rootObject in rootObjects)
-        {
-            OVRCameraRig[] sceneRigs = rootObject.GetComponentsInChildren<OVRCameraRig>(true);
-
-            foreach (OVRCameraRig sceneRig in sceneRigs)
-            {
-                if (foundRig == null)
-                {
-                    foundRig = sceneRig;
-                    continue;
-                }
-
-                Debug.LogError(
-                    $"Scene '{targetScene.name}' has multiple {nameof(OVRCameraRig)} components. Keep exactly one active rig per scene.",
-                    this);
-                return null;
-            }
-        }
-
-        if (foundRig == null)
-        {
-            Debug.LogError($"Scene '{targetScene.name}' has no {nameof(OVRCameraRig)}. A target scene rig is required for VR scene alignment.", this);
-        }
-
-        return foundRig;
-    }
-
-    private SceneSpawnPoint FindSceneSpawnPoint(Scene targetScene)
-    {
-        GameObject[] rootObjects = targetScene.GetRootGameObjects();
-        SceneSpawnPoint foundSpawnPoint = null;
-
-        foreach (GameObject rootObject in rootObjects)
-        {
-            SceneSpawnPoint[] spawnPoints = rootObject.GetComponentsInChildren<SceneSpawnPoint>(true);
-
-            foreach (SceneSpawnPoint spawnPoint in spawnPoints)
-            {
-                if (foundSpawnPoint == null)
-                {
-                    foundSpawnPoint = spawnPoint;
-                    continue;
-                }
-
-                Debug.LogWarning(
-                    $"Scene '{targetScene.name}' has multiple {nameof(SceneSpawnPoint)} components. Using '{foundSpawnPoint.name}' and ignoring '{spawnPoint.name}'.",
-                    this);
-                return foundSpawnPoint;
-            }
-        }
-
-        return foundSpawnPoint;
     }
 }
