@@ -11334,6 +11334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   persistAcrossSceneTransitions: 1
+  ovrCameraRig: {fileID: 444685381}
 --- !u!4 &1266282620
 Transform:
   m_ObjectHideFlags: 0
