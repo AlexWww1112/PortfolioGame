@@ -10053,7 +10053,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4cc08b23abacc428f60d54d437fe99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneSpawnPoint
-  applyYaw: 1
 --- !u!4 &1008587402
 Transform:
   m_ObjectHideFlags: 0
@@ -10995,7 +10994,7 @@ MonoBehaviour:
   requestRecordAudioPermissionOnStartup: 0
   requestPassthroughCameraAccessPermissionOnStartup: 0
   _localDimming: 1
-  _trackingOriginType: 0
+  _trackingOriginType: 1
   usePositionTracking: 1
   useRotationTracking: 1
   useIPDInPositionTracking: 1
@@ -13404,7 +13403,6 @@ MonoBehaviour:
   minAllowedScale: 0
   maxAllowedScale: 5
   disableAfterSuccess: 1
-  successSceneName: Menu
   onSuccess:
     m_PersistentCalls:
       m_Calls: []
@@ -19459,6 +19457,10 @@ PrefabInstance:
     - target: {fileID: -7377385338288389855, guid: 3c259fc98a291d443b31abc9a7b41e60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 114.241
+      objectReference: {fileID: 0}
+    - target: {fileID: -7029948723529949830, guid: 3c259fc98a291d443b31abc9a7b41e60, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7016362825991371437, guid: 3c259fc98a291d443b31abc9a7b41e60, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
