@@ -58,8 +58,8 @@ Material:
     - _Wave_Speed: 0.00347
     - _XRMotionVectorsPass: 1
     m_Colors:
-    - _Foam_Color: {r: 0, g: 0.50299835, b: 1, a: 0.5686275}
-    - _Water_Color: {r: 0, g: 0.66116905, b: 1, a: 0.6509804}
+    - _Foam_Color: {r: 0.2358489, g: 0.6194228, b: 1, a: 0.5686275}
+    - _Water_Color: {r: 0.43710685, g: 0.8101615, b: 1, a: 0.6509804}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2490189419767720270
