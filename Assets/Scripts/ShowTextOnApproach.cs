@@ -8,8 +8,10 @@ public class ShowTextOnApproach : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("触发了: " + other.name); 
             textUI.SetActive(true);
         }
+
     }
 
     private void OnTriggerExit(Collider other)
